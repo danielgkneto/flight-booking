@@ -20,21 +20,24 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
-        roleRepository.save(new Role("USER"));
-        roleRepository.save(new Role("ADMIN"));
+        if (roleRepository.findAll().size() == 0) {
+            roleRepository.save(new Role("USER"));
+            roleRepository.save(new Role("ADMIN"));
+        }
 
-        Set<Role> adminRoles = new HashSet<>();
-        adminRoles.add(roleRepository.findByName("ADMIN"));
-        adminRoles.add(roleRepository.findByName("USER"));
+        if (userRepository.findAll().size() == 0) {
+            Set<Role> userRoles = new HashSet<>();
+            userRoles.add(roleRepository.findByName("USER"));
 
-        Set<Role> userRoles = new HashSet<>();
-        userRoles.add(roleRepository.findByName("USER"));
+            Set<Role> adminRoles = new HashSet<>();
+            adminRoles.add(roleRepository.findByName("ADMIN"));
+            adminRoles.add(roleRepository.findByName("USER"));
 
-        User user = new User("Admin", "Admin", "admin", "password", "99/99/9999", "admin", "admin@example.com", "999-999-9999", adminRoles);
-        userRepository.save(user);
+            User user = new User("Admin", "Admin", "admin", "password", "99/99/9999", "admin", "admin@example.com", "999-999-9999", adminRoles);
+            userRepository.save(user);
 
-        user = new User("Daniel", "Krause", "danielgkneto", "password", "11/10/1979", "Brazil", "daniel@example.com", "222-222-2222", userRoles);
-        userRepository.save(user);
-
+            user = new User("Daniel", "Krause", "danielgkneto", "password", "11/10/1979", "Brazil", "daniel@example.com", "222-222-2222", userRoles);
+            userRepository.save(user);
+        }
     }
 }

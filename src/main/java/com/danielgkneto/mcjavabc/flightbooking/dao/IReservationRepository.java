@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface IReservationRepository extends CrudRepository<Reservation, Long> {
     Set<Reservation> findAll();
-    Set<Reservation> findByUser(User user);
+    Set<Reservation> findAllByUser(User user);
 }

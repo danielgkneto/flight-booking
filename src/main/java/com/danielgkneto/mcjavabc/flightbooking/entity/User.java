@@ -36,7 +36,7 @@ public class User {
     @Column(name="phone", nullable = false)
     private String phone;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
     @JoinTable(name="user_roles", joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -52,7 +52,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        this.setPassword(password);
         this.birthDate = birthDate;
         this.citizenship = citizenship;
         this.email = email;

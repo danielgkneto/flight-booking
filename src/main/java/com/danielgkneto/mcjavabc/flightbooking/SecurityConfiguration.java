@@ -36,9 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/register").permitAll()
-                .antMatchers("/logout").access("hasAuthority('USER')")
-                .antMatchers("/admin").access("hasAuthority('ADMIN')")
+                .antMatchers("/", "/login", "/register", "/flightsearch", "/processflightsearch").permitAll()
+                .antMatchers("/logout", "/myreservations").access("hasAuthority('USER')")
+                .antMatchers("/addflight", "/processflight", "/flightlist").access("hasAuthority('ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
