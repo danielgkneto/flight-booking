@@ -8,25 +8,25 @@
         <h1 class="text-dark display-3 text-center title">Flight Booking</h1>
         <h2 class="text-dark display-4 text-center title">My Flights</h2>
         <table class="table table-hover text-nowrap table-responsive-xl" th:if="${!reservations.isEmpty()}">
-            <thead class="thead-dark">
+            <thead class="thead-dark text-center">
             <tr>
                 <th>From / To</th>
                 <th>Departure Date</th>
                 <th>Return Date</th>
                 <th>Flight Class</th>
                 <th># Passengers</th>
-                <th>Total Price (US$)</th>
+                <th>Total Price</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="reservation : ${reservations}">
-                <td style="max-width: 200px" class="text-truncate" th:text="${reservation.departureFlight.departureAirport}"></td>
-                <td style="max-width: 250px" class="text-truncate" th:text=""></td></td>
-                <td style="max-width: 180px" class="text-truncate" th:text=""></td>
-                <td style="max-width: 180px" class="text-truncate" th:text=""></td>
-                <td style="max-width: 180px" class="text-truncate" th:text=""></td>
-                <td style="max-width: 140px" class="text-truncate" th:text=""></td>
-<!--                <td th:text="${#dates.format(job.postedDate, 'dd-MMM-yyyy')}"></td>-->
+                <td style="max-width: 400px" class="text-truncate" th:text="${reservation.departureFlight.departureAirport} + ' / ' + ${reservation.departureFlight.getArrivalAirport()}"></td>
+                <td style="max-width: 200px" class="text-truncate" th:text="${#dates.format(reservation.getDepartureDate(), 'dd-MMM-yyyy')}"></td></td>
+                <td style="max-width: 200px" class="text-truncate" th:if="${reservation.getReturnFlight() != null}" th:text="${#dates.format(reservation.getReturnDate(), 'dd-MMM-yyyy')}"></td></td>
+                <td style="max-width: 200px" class="text-truncate text-center" th:if="${reservation.getReturnFlight() == null}">-</td></td>
+                <td style="max-width: 140px" class="text-truncate text-center" th:text="${reservation.flightClass}"></td>
+                <td style="max-width: 140px" class="text-truncate text-center" th:text="${reservation.numberPassengers}"></td>
+                <td style="max-width: 140px" class="text-truncate" th:text="'$ ' + ${#numbers.formatDecimal(reservation.getDeparturePrice() + reservation.getReturnPrice(), 0, 'COMMA', 2, 'POINT')}"></td>
             </tr>
             </tbody>
         </table>

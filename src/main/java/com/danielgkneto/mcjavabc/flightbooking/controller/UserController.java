@@ -9,6 +9,7 @@ import com.danielgkneto.mcjavabc.flightbooking.entity.User;
 import com.danielgkneto.mcjavabc.flightbooking.service.FlightService;
 import com.danielgkneto.mcjavabc.flightbooking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Controller
 public class UserController {
 
     @Autowired
@@ -46,7 +48,7 @@ public class UserController {
     public String showMyReservations(Model model){
         User user = userService.getUser();
         model.addAttribute("reservations", reservationRepository.findAllByUser(user));
-        return "/myreservations";
+        return "myreservations";
     }
 
     @GetMapping("/flightsearch")

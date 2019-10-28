@@ -10,31 +10,26 @@
         <table class="table table-hover text-nowrap table-responsive-xl" th:if="${!flights.isEmpty()}">
             <thead class="thead-dark">
             <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Company</th>
-                <th>Phone</th>
-                <th>Posted Date</th>
-                <th>Actions</th>
+                <th>Flight Number</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Base Price</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="job : ${jobs}">
-                <td style="max-width: 200px" class="text-truncate" th:text="${job.title}"></td>
-                <td style="max-width: 250px" class="text-truncate" th:text="${job.description}"></td></td>
-                <td style="max-width: 180px" class="text-truncate" th:text="${job.company}"></td>
-                <td style="max-width: 140px" class="text-truncate" th:text="${job.phone}"></td>
-                <td th:text="${#dates.format(job.postedDate, 'dd-MMM-yyyy')}"></td>
-                <td>
-                    <!--TODO center align actions buttons or make the whole row clickable and get rid of actions -->
-                    <a data-toggle="tooltip" title="Details" class="btn btn-info btn-sm" th:href="@{/detail/{id}(id=${job.id})}"><span class="fa fa-eye" aria-hidden="true"></span></a>
-                    <a data-toggle="tooltip" title="Update" class="btn btn-primary btn-sm" th:if="${job.user.username} == ${#httpServletRequest.remoteUser}" th:href="@{/update/{id}(id=${job.id})}"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                    <a data-toggle="tooltip" title="Delete" class="btn btn-danger btn-sm" th:if="${job.user.username} == ${#httpServletRequest.remoteUser}" th:href="@{/delete/{id}(id=${job.id})}"><span class="fa fa-trash" aria-hidden="true"></span></a>
-                </td>
+            <tr th:each="flight : ${flights}">
+                <td style="max-width: 140px" class="text-truncate" th:text="${flight.getFlightNumber()}"></td>
+                <td style="max-width: 250px" class="text-truncate" th:text="${flight.getDepartureAirport()}"></td></td>
+                <td style="max-width: 250px" class="text-truncate" th:text="${flight.getArrivalAirport()}"></td>
+                <td style="max-width: 140px" class="text-truncate" th:text="${flight.getDepartureTime()}"></td>
+                <td style="max-width: 140px" class="text-truncate" th:text="${flight.calcArrivalTime()}"></td>
+                <td style="max-width: 140px" class="text-truncate" th:text="'$ ' + ${#numbers.formatDecimal(flight.basePrice, 0, 'COMMA', 2, 'POINT')}"></td>
             </tr>
             </tbody>
         </table>
-<!--        <a class="btn btn-primary btn-md" href="#" th:href="@{/addjob}">Add a Job</a>-->
+        <a class="btn btn-primary btn-md" href="#" th:href="@{/addflight}">Add a Flight</a>
     </div>
 </div>
 <div th:replace="base :: footer" />

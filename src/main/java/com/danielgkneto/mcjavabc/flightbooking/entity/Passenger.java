@@ -37,6 +37,13 @@ public class Passenger {
         this.reservation = reservation;
     }
 
+    public Passenger(String firstName, String lastName, String seatNumber) {
+        this();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.seatNumber = seatNumber;
+    }
+
     public long getId() {
         return id;
     }
