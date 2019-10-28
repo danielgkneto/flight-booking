@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: header" />
+<body>
+<div th:replace="base :: navlinks" />
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="text-dark display-3 text-center title">Flight Booking</h1>
+        <h2 class="text-dark display-4 text-center title">Flight Search Results</h2>
+        <p th:if="${depflights.isEmpty()}">We're sorry.  No flights match the combination of
+            departure and arrival airports you selected.</p>
+        <form th:action="@{/flightsearchresults}" th:object="${reservation}" method="post" th:if="${!depflights.isEmpty()}">
+        <div th:if="${!depflights.isEmpty()}">
+                <table class="table table-hover text-nowrap table-responsive-xl">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Choose</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Date / Time</th>
+                        <th>Duration (min)</th>
+                        <th>Price per Passenger</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="depflight : ${depflights}">
+                        <td style="max-width: 100px" class="text-truncate"><label><input type="radio" th:field="${reservation.departureFlight}" th:value="${depflight}" name="depflightradio"></label></td>
+                        <td style="max-width: 200px" class="text-truncate" th:text="${depflight.departureAirport}"></td></td>
+                        <td style="max-width: 200px" class="text-truncate" th:text="${depflight.arrivalAirport}"></td>
+                        <td style="max-width: 200px" class="text-truncate" th:text="${#dates.format(reservation.departureDate, 'dd-MMM-yyyy') + ' ' + depflight.departureTime}"></td>
+                        <td style="max-width: 150px" class="text-truncate" th:text="${depflight.durationMinutes}"></td>
+                        <td style="max-width: 150px" class="text-truncate" th:text="'$ ' + ${#numbers.formatDecimal(reservation.calcPrice(depflight.basePrice) / reservation.numberPassengers, 0, 'COMMA', 2, 'POINT')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+        <h3>Departure Flights</h3>
+        <br>
+        <div th:if="${reservation.getReturnDate() != null}">
+            <h3>Return Flights</h3>
+            <table class="table table-hover text-nowrap table-responsive-xl">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Choose</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Date / Time</th>
+                    <th>Duration (min)</th>
+                    <th>Price per Passenger</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="retflight : ${retflights}">
+                    <td style="max-width: 100px" class="text-truncate"><label><input type="radio" id="retflightradio" th:field="${reservation.returnFlight}" th:value="${retflight}" name="retflightradio"></label></td>
+                    <td style="max-width: 200px" class="text-truncate" th:text="${retflight.departureAirport}"></td></td>
+                    <td style="max-width: 200px" class="text-truncate" th:text="${retflight.arrivalAirport}"></td>
+                    <td style="max-width: 200px" class="text-truncate" th:text="${#dates.format(reservation.returnDate, 'dd-MMM-yyyy') + ' ' + retflight.departureTime}"></td>
+                    <td style="max-width: 150px" class="text-truncate" th:text="${retflight.durationMinutes}"></td>
+                    <td style="max-width: 150px" class="text-truncate" th:text="'$ ' + ${#numbers.formatDecimal(reservation.calcPrice(retflight.basePrice) / reservation.numberPassengers, 0, 'COMMA', 2, 'POINT')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+            <input class="btn btn-primary btn-md" type="submit" value="Enter Passengers Information">
+        </form>
+    </div>
+    <div th:replace="base :: footer" />
+    <div th:replace="base :: scripts" />
+</div>
+</body>
+</html>

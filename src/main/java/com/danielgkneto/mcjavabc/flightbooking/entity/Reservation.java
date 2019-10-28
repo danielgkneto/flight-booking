@@ -1,5 +1,7 @@
 package com.danielgkneto.mcjavabc.flightbooking.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Date;
@@ -15,9 +17,11 @@ public class Reservation {
     private long id;
 
     @Column(name = "departure_date", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date departureDate;
 
     @Column(name = "return_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date returnDate;
 
     @Column(name = "flight_class", nullable = false)
@@ -28,7 +32,7 @@ public class Reservation {
     private int numberPassengers;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "departure_flight_id", nullable = false)
+    @JoinColumn(name = "departure_flight_id")
     private Flight departureFlight;
 
     @Column(name = "departure_price")
@@ -45,7 +49,7 @@ public class Reservation {
     private Set<Passenger> passengers = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Reservation() {

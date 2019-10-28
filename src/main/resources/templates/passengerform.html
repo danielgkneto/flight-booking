@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: header" />
+<body>
+<div th:replace="base :: navlinks" />
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="text-dark display-3 text-center title">Flight Booking</h1>
+        <h2 class="text-dark display-4 text-center title">Passengers Information</h2>
+        <form action="#" th:action="@{/passengerform}" th:object="${passenger}" method="post">
+            <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input class="form-control" id="firstname" name="firstname" type="text" th:field="${passenger.firstName}" />
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input class="form-control" id="lastname" name="lastname" type="text" th:field="${passenger.lastName}" />
+            </div>
+            <div class="form-group">
+                <label for="seatnumber">Seat Selection <br>(Window seats (A, F) add $5)</label>
+                <select class="form-control" id="seatnumber" name="seatnumber" th:field="${passenger.seatNumber}">
+                    <option th:if="${reservation.getFlightClass().equals('first')}" value="1A">1A</option>
+                    <option th:if="${reservation.getFlightClass().equals('first')}" value="1F">1F</option>
+                    <option th:if="${reservation.getFlightClass().equals('first')}" value="2A">2A</option>
+                    <option th:if="${reservation.getFlightClass().equals('first')}" value="2F">2F</option>
+                    <option th:if="${reservation.getFlightClass().equals('first')}" value="3A">3A</option>
+                    <option th:if="${reservation.getFlightClass().equals('first')}" value="3F">3F</option>
+                    <option th:if="${reservation.getFlightClass().equals('business')}" value="4A">4A</option>
+                    <option th:if="${reservation.getFlightClass().equals('business')}" value="4B">4B</option>
+                    <option th:if="${reservation.getFlightClass().equals('business')}" value="5A">5A</option>
+                    <option th:if="${reservation.getFlightClass().equals('business')}" value="5B">5B</option>
+                    <option th:if="${reservation.getFlightClass().equals('business')}" value="5E">5E</option>
+                    <option th:if="${reservation.getFlightClass().equals('business')}" value="5F">5F</option>
+                    <option th:if="${reservation.getFlightClass().equals('economy')}" value="10A">10A</option>
+                    <option th:if="${reservation.getFlightClass().equals('economy')}" value="10B">10B</option>
+                    <option th:if="${reservation.getFlightClass().equals('economy')}" value="10C">10C</option>
+                    <option th:if="${reservation.getFlightClass().equals('economy')}" value="10D">10D</option>
+                    <option th:if="${reservation.getFlightClass().equals('economy')}" value="10E">10E</option>
+                    <option th:if="${reservation.getFlightClass().equals('economy')}" value="10F">10F</option>
+                </select>
+            </div>
+            <input class="btn btn-primary btn-md" type="submit" value="Add Passenger">
+        </form>
+    </div>
+</div>
+<div th:replace="base :: footer" />
+<div th:replace="base :: scripts" />
+
+</body>
+</html>

@@ -161,7 +161,7 @@ public class DataLoader implements CommandLineRunner {
             String rDate1 = "18-10-2019";
             departDate = dsdf.parse(dDate1);
             returnDate = dsdf.parse(rDate1);
-            Reservation rsvr1 = new Reservation(departDate, returnDate, "Economy", 1, flight1, flight1.getBasePrice(), flight4, flight4.getBasePrice(), set1, user1);
+            Reservation rsvr1 = new Reservation(departDate, returnDate, "economy", 1, flight1, flight1.getBasePrice(), flight4, flight4.getBasePrice(), set1, user1);
             reservationRepository.save(rsvr1);
             pass1.setReservation(rsvr1);
             passengerRepository.save(pass1);
@@ -170,7 +170,7 @@ public class DataLoader implements CommandLineRunner {
             String rDate2 = "28-10-2019";
             departDate = dsdf.parse(dDate2);
             returnDate = dsdf.parse(rDate2);
-            Reservation rsvr2 = new Reservation(departDate, returnDate, "Business", 3, flight3, flight3.getBasePrice() * 3, null, 0, set3, user);
+            Reservation rsvr2 = new Reservation(departDate, returnDate, "business", 3, flight3, flight3.getBasePrice() * 3, null, 0, set3, user);
             reservationRepository.save(rsvr2);
 
             pass3.setReservation(rsvr2);

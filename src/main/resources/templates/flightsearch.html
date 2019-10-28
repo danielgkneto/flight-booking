@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: header" />
+<body>
+<div th:replace="base :: navlinks" />
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="text-dark display-3 text-center title">Flight Booking</h1>
+        <h2 class="text-dark display-4 text-center title">Search for Flights</h2>
+        <form th:action="@{/flightsearch}" th:object="${reservation}" method="post">
+            <div class="form-group">
+                <label for="triptype">Type of Trip</label>
+                <select class="form-control" id="triptype" name="triptype">
+                    <option value="oneway">One Way</option>
+                    <option value="roundtrip">Round Trip</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numberpassengers">Number of Passengers</label>
+                <select class="form-control" id="numberpassengers" name="numberpassengers">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="flightclass">Passenger Class</label>
+                <select class="form-control" id="flightclass" name="flightclass" th:field="${reservation.flightClass}">
+                    <option value="economy">Economy Class</option>
+                    <option value="business">Business Class</option>
+                    <option value="first">First Class</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="departurelocation">Departure Location</label>
+                <select class="form-control" id="departurelocation" name="departurelocation">
+                    <option th:each="airport : ${airports}"
+                            th:value="${airport}"
+                            th:text="${airport}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="arrivallocation">Arrival Location</label>
+                <select class="form-control" id="arrivallocation" name="arrivallocation">
+                    <option th:each="airport : ${airports}"
+                            th:value="${airport}"
+                            th:text="${airport}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="departuredate">Departure Date</label>
+                <input class="form-control" id="departuredate" type="date" name="departuredate" th:field="${reservation.departureDate}"/>
+            </div>
+            <div class="form-group">
+                <label for="returndate">Return Date</label>
+                <input class="form-control" id="returndate" type="date" name="returndate" th:field="${reservation.returnDate}" />
+            </div>
+            <input class="btn btn-primary btn-md" type="submit" value="Save">
+        </form>
+    </div>
+</div>
+<div th:replace="base :: footer" />
+<div th:replace="base :: scripts" />
+
+</body>
+</html>
